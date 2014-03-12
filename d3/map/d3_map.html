@@ -11,13 +11,17 @@
         <script type="text/javascript">
 		    var w = 1000;
 			var h = 1000;
-			
-		    //var xy = d3.geo.albersUsa().translate([-900,950]).scale(28000);
-			//var path = d3.geo.path().projection(xy);
 
 			d3.json("san_antonio.json", function(json) {
 
-				var path = d3.geo.path();
+				var projection = d3.geo.mercator()
+				 	.center([-98.491831, 29.475620])
+				 	.scale(50000);
+
+
+
+				var path = d3.geo.path()
+					.projection(projection);
 			
 				var svg = d3.select("body")
 					.append("svg")
@@ -28,7 +32,9 @@
 					.data(json.features)
 					.enter()
 					.append("path")
-					.attr("d", path);
+					.attr("d", path)
+					.attr("stroke", "orange")
+					.attr("fill", "#ccc");
 			});
 			
 		   
